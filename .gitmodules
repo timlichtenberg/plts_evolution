@@ -1,0 +1,3 @@
+[submodule "data/two_stage"]
+	path = data/two_stage
+	url = https://github.com/timlichtenberg/2stage_scripts_data.git
