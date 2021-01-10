@@ -15,22 +15,9 @@ if cmap_scale == "linear":
     cbar_ticks_label    = linear_ticks_label
     norm = colors.Normalize(vmin=min(linear_ticks), vmax=max(linear_ticks)) # linear
 
-fscale  = 3.5
-fsize   = 20
-
-fsize_m = 20
-fsize_s = fsize_m-2
-fsize_l = fsize_m+2
-
 sns.set(font_scale=fscale)
-
 sns.axes_style("white")
 sns.set_style("ticks")
-
-# Working directories
-working_dir = os.getcwd()
-dat_dir     = working_dir+"/../data/two_stage/data/planetesimal_evolution/"
-fig_dir     = working_dir+"/../figures/"
 
 df = pd.read_csv(dat_dir+"plts_all_data.csv")
 RUN_LIST = natsorted(set(df.run.tolist()))
@@ -233,20 +220,6 @@ txt_90pp = ax1.text(200, 0.3, '< 10 vol%\nretained', color="black", rotation=0, 
 # plt.gca().axes.get_yaxis().set_visible(False)
 
 plt.gca().invert_yaxis()
-
-# 2nd y-axis: Al-26 from tform (relartive to CAI initial)
-def transform_tform_to_al26(t):
-    # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.log.html
-    # t = -1.0344*np.log(Al)
-    # return [ "%.2f" % z for z in t ]
-    Al = 5.25*np.exp(-t/1.03)
-    Al = Al/5.25 # normalise to CAIs
-    return [ "%.2f" % z for z in Al ]
-# Test:
-# tform_list  = np.array(natsorted(set(tform)))
-# Al26_init   = transform_tform_to_al26(tform_list)
-# print(tform_list)
-# print(Al26_init)
 
 ax2 = ax1.twinx()
 # tform_list_show = np.array([3.0, 0.0])
