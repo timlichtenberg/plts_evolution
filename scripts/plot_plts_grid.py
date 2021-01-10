@@ -126,6 +126,13 @@ nloops = 3
 for i in range(0, nloops):
     CS = ax1.contourf(grid_x, grid_y, zi, no_color_fields, cmap="magma")#, vmax=cmap_max, vmin=cmap_min)#, extend='max')
 
+# Water
+contour_water = ax1.contour(grid_x, grid_y, zi_h2o_frac, [0.1, 0.9], colors=qblue, linewidths=3.0, linestyles=["-", "--"])
+# N2/CO2
+contour_water = ax1.contour(grid_x, grid_y, zi_n2co2_frac, [0.1, 0.9], colors=qgreen, linewidths=3.0, linestyles=["-", "--"])
+# CO
+contour_water = ax1.contour(grid_x, grid_y, zi_cocl_frac, [0.1, 0.9], colors=qred, linewidths=3.0, linestyles=["-", "--"])
+
 # cbar = fig.colorbar(CS, cax=axins1, orientation="horizontal", ticks=cbar_ticks)
 # cbar.outline.set_edgecolor('black')
 # cbar.outline.set_linewidth(1)
@@ -186,14 +193,14 @@ for i in range(0, nloops):
 
 # Axes settings
 ax1.set_xlim(1, 300)
-ax1.set_ylim(0.1, 3.0)
+ax1.set_ylim(0.1, 2.0)
 ax1.set_xscale("log") 
 # ax1.set_yscale("log") 
-ax1.set_xticks([1, 2, 3, 5, 7, 10, 20, 30, 50, 100, 300])
-ax1.set_xticklabels(["1", "2", "3", "5", "7", "10", "20", "30", "50", "100", "300"], fontsize=fsize)
-tform_list_show = np.array([0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
+ax1.set_xticks([1, 2, 3, 5, 7, 10, 20, 30, 50, 100, 200, 300])
+ax1.set_xticklabels(["1", "2", "3", "5", "7", "10", "20", "30", "50", "100", "200", "300"], fontsize=fsize)
+tform_list_show = np.array([0.0, 0.5, 1.0, 1.5, 2.0])
 ax1.set_yticks(tform_list_show)
-ax1.set_yticklabels(["0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0"], fontsize=fsize)
+ax1.set_yticklabels(["0.0", "0.5", "1.0", "1.5", "2.0"], fontsize=fsize)
 # ax1.xaxis.tick_bottom()
 ax1.xaxis.tick_top()
 
@@ -202,7 +209,7 @@ ax1.tick_params(axis='x', which='both', right='on', top='on', labelsize=fsize, w
 ax1.tick_params(axis='y', which='both', right='on', top='on', labelsize=fsize, width=tw, color="black", pad=7.)
 
 ax1.set_xlabel(r"Planetesimal radius, $R_{\mathrm{P}}$ (km)", fontsize=fsize)
-ax1.set_ylabel(r"Solar System time, $\tau_{\mathrm{plts},\odot}$ (Myr)", fontsize=fsize)
+ax1.set_ylabel(r"Solar System time, $\tau_{\odot}$ (Myr)", fontsize=fsize)
 ax1.xaxis.set_label_coords(0.5, +1.11)
 # ax1.xaxis.set_label_position('top') 
 
@@ -229,7 +236,7 @@ ax2 = ax1.twinx()
 ax2.set_ylim(ax1.get_ylim())
 ax2.set_yticks(tform_list_show)
 ax2.set_yticklabels(transform_tform_to_al26(tform_list_show), fontsize=fsize)
-ax2.set_ylabel(r"Exo-planetesimal enrichment, $^{26}$Al$_{\mathrm{exo}}$/$^{26}$Al$_{\odot}$", fontsize=fsize)
+ax2.set_ylabel(r"Enrichment level, $^{26}$Al$_{\mathrm{exo}}$/$^{26}$Al$_{\odot}$ (non-dim.)", fontsize=fsize)
 
 # divider = make_axes_locatable(ax2)
 # cax = divider.append_axes("top", size="5%", pad="-55%")
