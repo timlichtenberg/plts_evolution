@@ -9,6 +9,7 @@ import seaborn as sns
 import csv
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.patheffects as path_effects
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 qgray       = "#768E95"
 qblue       = "#4283A9"
