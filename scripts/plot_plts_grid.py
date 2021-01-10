@@ -17,6 +17,11 @@ if cmap_scale == "linear":
 
 fscale  = 3.5
 fsize   = 20
+
+fsize_m = 20
+fsize_s = fsize_m-2
+fsize_l = fsize_m+2
+
 sns.set(font_scale=fscale)
 
 sns.axes_style("white")
@@ -126,12 +131,12 @@ nloops = 3
 for i in range(0, nloops):
     CS = ax1.contourf(grid_x, grid_y, zi, no_color_fields, cmap="magma")#, vmax=cmap_max, vmin=cmap_min)#, extend='max')
 
-# Water
-contour_water = ax1.contour(grid_x, grid_y, zi_h2o_frac, [0.1, 0.9], colors=qblue, linewidths=3.0, linestyles=["-", "--"])
-# N2/CO2
-contour_water = ax1.contour(grid_x, grid_y, zi_n2co2_frac, [0.1, 0.9], colors=qgreen, linewidths=3.0, linestyles=["-", "--"])
 # CO
 contour_water = ax1.contour(grid_x, grid_y, zi_cocl_frac, [0.1, 0.9], colors=qred, linewidths=3.0, linestyles=["-", "--"])
+# Water
+contour_water = ax1.contour(grid_x, grid_y, zi_h2o_frac, [0.1, 0.9], colors=qblue, linewidths=3.0, linestyles=["-", "--"])
+# CO2
+contour_water = ax1.contour(grid_x, grid_y, zi_n2co2_frac, [0.1, 0.9], colors=qgreen, linewidths=3.0, linestyles=["-", "--"])
 
 # cbar = fig.colorbar(CS, cax=axins1, orientation="horizontal", ticks=cbar_ticks)
 # cbar.outline.set_edgecolor('black')
@@ -208,10 +213,22 @@ ax1.xaxis.tick_top()
 ax1.tick_params(axis='x', which='both', right='on', top='on', labelsize=fsize, width=tw, color="black", pad=7.)
 ax1.tick_params(axis='y', which='both', right='on', top='on', labelsize=fsize, width=tw, color="black", pad=7.)
 
-ax1.set_xlabel(r"Planetesimal radius, $R_{\mathrm{P}}$ (km)", fontsize=fsize)
-ax1.set_ylabel(r"Solar System time, $\tau_{\odot}$ (Myr)", fontsize=fsize)
+ax1.set_xlabel(r"Planetesimal radius, $R_{\mathrm{P}}$ (km)", fontsize=fsize_l)
+ax1.set_ylabel(r"Solar System time, $\tau_{\odot}$ (Myr)", fontsize=fsize_l)
 ax1.xaxis.set_label_coords(0.5, +1.11)
 # ax1.xaxis.set_label_position('top') 
+
+txt1_x  = 1.3
+txt1_y  = 0.2
+txt_co  = ax1.text(txt1_x, txt1_y, r'CO', color=qred, rotation=0, ha="left", fontsize=fsize_l)
+txt_h2o = ax1.text(txt1_x, txt1_y+0.15, r'H$_\mathrm{2}$O', color=qblue, rotation=0, ha="left", fontsize=fsize_l)
+txt_co2 = ax1.text(txt1_x, txt1_y+0.30, r'CO$_\mathrm{2}$', color=qgreen, rotation=0, ha="left", fontsize=fsize_l)
+
+txt_10pp = ax1.text(2, 1.5, r'> 90 vol% retained', color="white", rotation=0, ha="left", fontsize=fsize_l)
+txt_90pp = ax1.text(200, 0.3, '< 10 vol%\nretained', color="black", rotation=0, ha="right", fontsize=fsize_l)
+
+# for text in [ txt_10pp, txt_90pp ]:
+#     text.set_path_effects([path_effects.Stroke(linewidth=1.0, foreground='white'), path_effects.Normal()])
 
 # plt.gca().axes.get_yaxis().set_visible(False)
 
@@ -236,7 +253,7 @@ ax2 = ax1.twinx()
 ax2.set_ylim(ax1.get_ylim())
 ax2.set_yticks(tform_list_show)
 ax2.set_yticklabels(transform_tform_to_al26(tform_list_show), fontsize=fsize)
-ax2.set_ylabel(r"Enrichment level, $^{26}$Al$_{\mathrm{exo}}$/$^{26}$Al$_{\odot}$ (non-dim.)", fontsize=fsize)
+ax2.set_ylabel(r"Enrichment level, $^{26}$Al$_{\mathrm{exo}}$/$^{26}$Al$_{\odot}$ (non-dim.)", fontsize=fsize_l)
 
 # divider = make_axes_locatable(ax2)
 # cax = divider.append_axes("top", size="5%", pad="-55%")
@@ -248,9 +265,9 @@ cbar_ticks_labels = cbar_ticks
 cbar = fig.colorbar(CS, orientation="horizontal", ticks=cbar_ticks, pad=+0.02)
 cbar.outline.set_edgecolor('black')
 cbar.outline.set_linewidth(1)
-cbar_label = r"Maximum temperature, $T_\mathrm{max}$ (K)"
+cbar_label = r"Maximum planetesimal temperature, $T_\mathrm{max}$ (K)"
 cmap = sns.cubehelix_palette(light=1, as_cmap=True) # "magma", "YlGnBu", "viridis_r"
-cbar.set_label(cbar_label, fontsize=fsize+7, labelpad=+20)
+cbar.set_label(cbar_label, fontsize=fsize_l, labelpad=+15)
 cbar.ax.tick_params(labelsize=fsize) 
 # cbar.ax.xaxis.set_label_position('top')
 # cbar.ax.xaxis.set_ticks_position('top')
