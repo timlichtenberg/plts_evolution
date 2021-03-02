@@ -12,8 +12,8 @@ RUN_LIST_ALL = natsorted(set(df.run.tolist()))
 
 RUN_LIST       = [ 
                     "r010t000al05250fe01150tmp150",
-                    "r100t000al05250fe01150tmp150",
-                    "r100t100al05250fe01150tmp150",                  
+                    "r100t100al05250fe01150tmp150",   
+                    "r100t000al05250fe01150tmp150",               
                     ]
 
 fig = plt.figure(figsize=(10,9))
@@ -76,7 +76,7 @@ for idx in range(0,9):
         # plt.plot([0], [0], color="white", label=char)
     if idx == 7:
         RUN   = RUN_LIST[1]
-        ls    = "-"
+        ls    = "--"
         color = qgreen
         char  = r'H$_\mathrm{2}$O, '
         quantity = df[df['run']==RUN].n2co2_frac.tolist()
@@ -109,8 +109,8 @@ sns.set_style("whitegrid")
 sns.despine(ax=ax1, top=True, right=True, left=False, bottom=False)
 sns.set(style="ticks", font_scale=fscale)
 
-xticks      = [ 0.3, 0.5, 1, 2, 3, 5 ]
-xticklabels = [ "0.3", "0.5", "1", "2", "3", "5" ]
+xticks      = [ 0.2, 0.3, 0.5, 1, 2, 3, 5 ] # 0.0, 0.1, 0.2, 
+xticklabels = [ "0.2", "0.3", "0.5", "1", "2", "3", "5" ] # "0.0", "0.1", "0.2", 
 yticks      = [ 0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3, 0.5, 1 ]
 yticklabels = [ str(round(i*100)) for i in yticks ]
 
