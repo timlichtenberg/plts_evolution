@@ -1,2 +1,1 @@
-# 21_volfrac
-Data &amp; plotting repository for Lichtenberg &amp; Krijt (2021)
+# Plots and data output based on Lichtenberg et al. (2021)
