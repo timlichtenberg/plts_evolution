@@ -139,4 +139,4 @@ plt.ylabel(r"Retained volatile fraction, $f_{\mathrm{vol}}$ (vol%)", fontsize=fs
 plt.xlabel(r"Time after planetesimal formation, $t_\mathrm{plts}$ (Myr)", fontsize=fsize_l)
 
 figure_name="fig_plts_time"+".pdf"
-plt.savefig(fig_dir+figure_name, bbox_inches='tight')
+plt.savefig(fig_dir+"/21_Lichtenberg_Krijt/"+figure_name, bbox_inches='tight')

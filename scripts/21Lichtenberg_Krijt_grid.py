@@ -246,4 +246,4 @@ cbar.ax.tick_params(labelsize=fsize)
 # cbar.ax.xaxis.set_ticks_position('top')
 # cbar.ax.set_xticklabels(cbar_ticks_labels)
 
-plt.savefig(fig_dir+"fig_plts_grid"+".pdf", bbox_inches='tight')
+plt.savefig(fig_dir+"/21_Lichtenberg_Krijt/"+"fig_plts_grid"+".pdf", bbox_inches='tight')
