@@ -239,7 +239,7 @@ cbar_ticks_labels = cbar_ticks
 cbar = fig.colorbar(CS, orientation="horizontal", ticks=cbar_ticks, pad=+0.02)
 cbar.outline.set_edgecolor('black')
 cbar.outline.set_linewidth(1)
-cbar_label = r"Maximum planetesimal temperature, $T_\mathrm{max}$ (K)"
+cbar_label = r"Fraction of interior differentiated (non-dim.)"
 cmap = sns.cubehelix_palette(light=1, as_cmap=True) # "magma", "YlGnBu", "viridis_r"
 cbar.set_label(cbar_label, fontsize=fsize_l, labelpad=+15)
 cbar.ax.tick_params(labelsize=fsize) 
