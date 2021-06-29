@@ -261,9 +261,7 @@ ax2.yaxis.set_label_coords(+1.10, 0.5)
 
 # cbar_ticks        = [zi.min(), zi.min()+(zi.max()-zi.min())*0.2, zi.min()+(zi.max()-zi.min())*0.4, zi.min()+(zi.max()-zi.min())*0.6, zi.min()+(zi.max()-zi.min())*0.8, zi.max()]
 cbar_ticks        = [ 150, 300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650]
-# cbar_ticks        = [ 0.0, 0.5, 1.0 ]
-# cbar_ticks        = [ int(round(k)) for k in cbar_ticks ]
-cbar_ticks_labels = cbar_ticks
+cbar_ticks_labels = [ "150", "300", "450", "600", "750", "900", "1050", "1200", "1350", "1500", ">1650"]
 cbar = fig.colorbar(CS, orientation="horizontal", ticks=cbar_ticks, pad=+0.02)
 cbar.outline.set_edgecolor('black')
 cbar.outline.set_linewidth(1)
@@ -271,7 +269,7 @@ cbar_label = r"Maximum planetesimal temperature, $T_\mathrm{plts,max}$ (K)"
 cmap = sns.cubehelix_palette(light=1, as_cmap=True) # "magma", "YlGnBu", "viridis_r"
 cbar.set_label(cbar_label, fontsize=fsize_l, labelpad=+15)
 cbar.ax.tick_params(labelsize=fsize) 
-cbar.ax.set_xticklabels(cbar_ticks, rotation=-45)
+cbar.ax.set_xticklabels(cbar_ticks_labels, rotation=-45)
 # cbar.ax.xaxis.set_label_position('top')
 # cbar.ax.xaxis.set_ticks_position('top')
 # cbar.ax.set_xticklabels(cbar_ticks_labels)
