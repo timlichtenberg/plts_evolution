@@ -93,7 +93,7 @@ annotate_font   = 16
 lw              = 10
 tw              = 1.5
 
-fig = plt.figure(figsize=(10,10))
+fig = plt.figure(figsize=(10,12))
 ax1 = fig.add_subplot(111)
 plt.tight_layout(pad=0.2, w_pad=1, h_pad=0.2)
 
@@ -124,13 +124,38 @@ for i in range(0, nloops):
     CS = ax1.contourf(grid_x, grid_y, zi, no_color_fields, cmap=cmap)#, vmax=cmap_max, vmin=cmap_min)#, extend='max')
 
 # Differentiation
-contour_core = ax1.contour(grid_x, grid_y, zi_perco_frac, [0.01], colors=qred, linewidths=3.0, linestyles=["--"])
-contour_core = ax1.contour(grid_x, grid_y, zi_melt2_frac, [0.50], colors=qred, linewidths=3.0, linestyles=["-"])
-# Water
-contour_water = ax1.contour(grid_x, grid_y, zi_primitive_frac, [0.5], colors=qblue, linewidths=3.0, linestyles=["--"])
-contour_water2 = ax1.contour(grid_x, grid_y, zi_hydrous_frac, [0.5], colors=qblue, linewidths=3.0, linestyles=["-"])
+contour_core1 = ax1.contour(grid_x, grid_y, zi_perco_frac, [0.10], colors="tab:grey", linewidths=3.0, linestyles=[":"])
+contour_core2 = ax1.contour(grid_x, grid_y, zi_melt2_frac, [0.50], colors="tab:grey", linewidths=3.0, linestyles=["-"], zorder=10)
+# Melting
+contour_melt1 = ax1.contour(grid_x, grid_y, zi_sol_frac, [0.50], colors="tab:red", linewidths=3.0, linestyles=[":"])
+contour_core2 = ax1.contour(grid_x, grid_y, zi_melt2_frac, [0.50], colors="tab:red", linewidths=3.0, linestyles=["--"], zorder=11)
+# Volatiles
+contour_water = ax1.contour(grid_x, grid_y, zi_primitive_frac, [0.5], colors="tab:blue", linewidths=3.0, linestyles=[":"])
+# contour_water2 = ax1.contour(grid_x, grid_y, zi_hydrous_frac, [0.50], colors=qblue, linewidths=3.0, linestyles=["-"])
+contour_water3 = ax1.contour(grid_x, grid_y, zi_h2o_frac, [0.50], colors="tab:blue", linewidths=3.0, linestyles=["--"])
 # # CO2
 # contour_water = ax1.contour(grid_x, grid_y, zi_n2co2_frac, [0.1, 0.9], colors=qgreen, linewidths=3.0, linestyles=["-", "--"])
+
+# Markers
+# ax1.plot([10], [1], marker="o", zorder=20, markersize=25, markerfacecolor='tab:blue', markeredgecolor='white')
+
+ax1.text(16, 0.1, "V3", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:blue", ec="white", lw=1))
+ax1.text(6, 0.1, "V2", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:blue", ec="white", lw=1))
+ax1.text(2.7, 0.1, "V1", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:blue", ec="white", lw=1))
+
+ax1.text(250, 0.96, "R3", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:red", ec="white", lw=1))
+ax1.text(250, 1.18, "R2", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:red", ec="white", lw=1))
+ax1.text(250, 1.39, "R1", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:red", ec="white", lw=1))
+
+ax1.text(45, 0.7, "M3", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:grey", ec="white", lw=1))
+ax1.text(24, 0.85, "M2", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:grey", ec="white", lw=1))
+ax1.text(14, 1.0, "M1", ha="center", va="center", rotation=-90, size=15, zorder=20, color='white', bbox=dict(boxstyle="circle,pad=0.3", fc="tab:grey", ec="white", lw=1))
+
+
+ax1.text(1.05, 0.3, r"$^{26}$Al decay time scale", ha="left", va="center", rotation=-90, size=15, zorder=20, color='black')
+ax1.text(1.05, 0.72, r"$1 \times t_\mathrm{1/2}$", ha="left", va="center", rotation=-90, size=20, zorder=20, color='black')
+ax1.text(1.05, 1.03, r"$\tau$", ha="left", va="center", rotation=-90, size=20, zorder=20, color='black')
+ax1.text(1.05, 1.44, r"$2 \times t_\mathrm{1/2}$", ha="left", va="center", rotation=-90, size=20, zorder=20, color='black')
 
 # cbar = fig.colorbar(CS, cax=axins1, orientation="horizontal", ticks=cbar_ticks)
 # cbar.outline.set_edgecolor('black')
@@ -196,10 +221,10 @@ ax1.set_ylim(0.1, 2.0)
 ax1.set_xscale("log") 
 # ax1.set_yscale("log") 
 ax1.set_xticks([1, 2, 3, 5, 7, 10, 20, 30, 50, 100, 200, 300])
-ax1.set_xticklabels(["1", "2", "3", "5", "7", "10", "20", "30", "50", "100", "200", "300"], fontsize=fsize)
-tform_list_show = np.array([0.0, 0.5, 1.0, 1.5, 2.0])
+ax1.set_xticklabels(["1", "2", "3", "5", "7", "10", "20", "30", "50", "100", "200", "300"], fontsize=fsize, rotation=270)
+tform_list_show = np.array([0.0, 0.30, 0.72, 1.03, 1.44, 1.8, 2.16])
 ax1.set_yticks(tform_list_show)
-ax1.set_yticklabels(["0.0", "0.5", "1.0", "1.5", "2.0"], fontsize=fsize)
+ax1.set_yticklabels([ round(i,2) for i in list(tform_list_show)], fontsize=fsize, rotation=270)
 # ax1.xaxis.tick_bottom()
 ax1.xaxis.tick_top()
 
@@ -208,9 +233,10 @@ ax1.tick_params(axis='x', which='both', right='on', top='on', labelsize=fsize, w
 ax1.tick_params(axis='y', which='both', right='on', top='on', labelsize=fsize, width=tw, color="black", pad=7.)
 
 ax1.set_xlabel(r"Planetesimal radius, $R_{\mathrm{P}}$ (km)", fontsize=fsize_l)
-ax1.set_ylabel(r"Planetesimal formation time after CAIs, $\Delta t_\mathrm{CAI}$ (Myr)", fontsize=fsize_l)
+ax1.set_ylabel(r"Planetesimal formation time after CAIs, $\Delta t_\mathrm{CAI}$ (Myr)", fontsize=fsize_l, rotation=270)
 ax1.xaxis.set_label_coords(0.5, +1.11)
 # ax1.xaxis.set_label_position('top') 
+ax1.yaxis.set_label_coords(-0.10, 0.5)
 
 txt1_x  = 1.3
 txt1_y  = 0.2
@@ -226,11 +252,12 @@ txt1_y  = 0.2
 plt.gca().invert_yaxis()
 
 ax2 = ax1.twinx()
-# tform_list_show = np.array([3.0, 0.0])
+# tform_list_show = np.array([1.0, 0.5])
 ax2.set_ylim(ax1.get_ylim())
 ax2.set_yticks(tform_list_show)
-ax2.set_yticklabels([ round(float(i)*100) for i in transform_tform_to_al26(tform_list_show)], fontsize=fsize)
-ax2.set_ylabel(r"Enrichment level, $^{26}$Al$_{\mathrm{plts}}$/$^{26}$Al$_\mathrm{CAI}$ (%)", fontsize=fsize_l)
+ax2.set_yticklabels([ round(float(i)*100) for i in transform_tform_to_al26(tform_list_show)], fontsize=fsize, rotation=270)
+ax2.set_ylabel(r"Enrichment level, $^{26}$Al$_{\mathrm{plts}}$/$^{26}$Al$_\mathrm{CAI}$ (%)", fontsize=fsize_l, rotation=270)
+ax2.yaxis.set_label_coords(+1.10, 0.5)
 
 # cbar_ticks        = [zi.min(), zi.min()+(zi.max()-zi.min())*0.2, zi.min()+(zi.max()-zi.min())*0.4, zi.min()+(zi.max()-zi.min())*0.6, zi.min()+(zi.max()-zi.min())*0.8, zi.max()]
 cbar_ticks        = [ 150, 300, 450, 600, 750, 900, 1050, 1200, 1350, 1500, 1650]
@@ -240,10 +267,11 @@ cbar_ticks_labels = cbar_ticks
 cbar = fig.colorbar(CS, orientation="horizontal", ticks=cbar_ticks, pad=+0.02)
 cbar.outline.set_edgecolor('black')
 cbar.outline.set_linewidth(1)
-cbar_label = r"Maximum temperature inside planetesimal, $T_\mathrm{plts,max}$ (K)"
+cbar_label = r"Maximum planetesimal temperature, $T_\mathrm{plts,max}$ (K)"
 cmap = sns.cubehelix_palette(light=1, as_cmap=True) # "magma", "YlGnBu", "viridis_r"
 cbar.set_label(cbar_label, fontsize=fsize_l, labelpad=+15)
 cbar.ax.tick_params(labelsize=fsize) 
+cbar.ax.set_xticklabels(cbar_ticks, rotation=-45)
 # cbar.ax.xaxis.set_label_position('top')
 # cbar.ax.xaxis.set_ticks_position('top')
 # cbar.ax.set_xticklabels(cbar_ticks_labels)
