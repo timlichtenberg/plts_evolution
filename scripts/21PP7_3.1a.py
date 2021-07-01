@@ -113,9 +113,21 @@ for index, row in df.iterrows():
    # y-error
    ax2.plot([float(row['ta']),float(row['ta'])], [float(row['D95mo'])-float(row['dD95mo']),float(row['D95mo'])+float(row['dD95mo'])], color=mc, ls="-", zorder=10)
 
+# Reservoir means
+# C
+ax2.fill_between([0.0, 4.5], [24, 24], 28, fc=qblue_light, alpha=0.05)
+ax2.axhline(+26, color=qblue_light, ls=":", alpha=0.5)
+ax2.text(0.05, 27, 'C mean', color=qblue_light, rotation=0, ha="left", va="bottom", fontsize=fsize-8, zorder=20, alpha=0.5)
+# Earth
+ax2.fill_between([0.0, 4.5], [2, 2], 12, fc=qmagenta_light, alpha=0.05)
+ax2.axhline(+7, color=qmagenta_light, ls=":", alpha=0.5)
+ax2.text(0.05, 8, 'Earth', color=qmagenta_light, rotation=0, ha="left", va="bottom", fontsize=fsize-8, zorder=20, alpha=0.5)
+# NC
+ax2.fill_between([0.0, 4.5], [-11, -11], -7, fc=qred_light, alpha=0.05)
+ax2.axhline(-9, color=qred_light, ls=":", alpha=0.5)
+ax2.text(4.43, -8, 'NC mean', color=qred_light, rotation=0, ha="right", va="bottom", fontsize=fsize-8, zorder=20, alpha=0.5)
 
 # Other timelines
-
 y_min    = 1
 y_base   = y_min+0.4
 y_delta  = 1
@@ -160,7 +172,7 @@ time_labels = [ str(n) for n in time_ticks ]
 # ax2.set_xscale("log")
 # ax2.set_yscale("log")
 
-ax1.set_ylim([y_min, y_max-0.3])
+ax1.set_ylim([y_min, y_max-0.4])
 
 ax2.set_ylim(bottom=-42, top=60)
 
@@ -191,7 +203,7 @@ ax2.set_ylabel(r"Isotopic anomaly, $\Delta^{95}$Mo", fontsize=fsize+2)
 ax1.text(0.01, 0.96, 'A', color="k", rotation=0, ha="left", va="center", fontsize=fsize+3, transform=ax1.transAxes)
 ax1.text(0.05, 0.96, 'Timeline of Solar System accretion', color=qgray_dark, rotation=0, ha="left", va="center", fontsize=fsize-6, transform=ax1.transAxes)
 ax2.text(0.01, 0.95, 'B', color="k", rotation=0, ha="left", va="center", fontsize=fsize+3, transform=ax2.transAxes)
-ax2.text(0.05, 0.95, 'NC and C planetesimal accretion times', color=qgray_dark, rotation=0, ha="left", va="center", fontsize=fsize-6, transform=ax2.transAxes)
+ax2.text(0.05, 0.95, 'C and NC planetesimal accretion', color=qgray_dark, rotation=0, ha="left", va="center", fontsize=fsize-6, transform=ax2.transAxes)
 
 ax2.legend(ncol=3, fontsize=fsize-8, loc=[0.33, 0.02]).set_zorder(102)
 
