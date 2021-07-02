@@ -23,11 +23,11 @@ ax2  = plt.subplot(grid[2:4, 0], sharex=ax1)
 
 ############# CORE FORMATION AGES
 
-# ## Calc error propagated mean age
-# # --> pip install uncertainties
-# # https://pypi.org/project/uncertainties/
-# import uncertainties
-# from uncertainties import ufloat
+## Calc error propagated mean age
+# --> pip install uncertainties
+# https://pypi.org/project/uncertainties/
+import uncertainties
+from uncertainties import ufloat
 
 # NC_irons = np.array([ufloat(0.3, 0.5),  # IC
 #                      ufloat(0.8, 0.5),  # IIAB
@@ -56,6 +56,9 @@ ax2  = plt.subplot(grid[2:4, 0], sharex=ax1)
 # nc_color_ages  = qred
 # cc_color_ages  = qblue
 
+NC_accr = []
+CC_accr = []
+
 # Values from Sugiura & Fujiya 2014, Desch+ 2018, Kleine+ 2020
 
 # NC IRONS
@@ -63,9 +66,8 @@ ax2  = plt.subplot(grid[2:4, 0], sharex=ax1)
 df = pd.read_csv("../data/pp7/"+"meteorite_data.csv", sep=",", comment="#")
 print(df)
 
-# 
 for index, row in df.iterrows():
-   print(row['class'], row['type'], row['sample'], row['ta'], row['D95mo'])
+   print(row['class'], row['type'], row['sample'], row['ta'], row['dta-'], row['dta+'], row['D95mo'], row['dD95mo'])
 
    if row['class'] == "NC" and row['type'] == "C":
       mc = qred_light
@@ -113,7 +115,32 @@ for index, row in df.iterrows():
    # y-error
    ax2.plot([float(row['ta']),float(row['ta'])], [float(row['D95mo'])-float(row['dD95mo']),float(row['D95mo'])+float(row['dD95mo'])], color=mc, ls="-", zorder=10)
 
+   # Add to mean calc list
+   if row['class'] == "NC":
+      t_acc_err = np.max([row['dta-'], row['dta+']])
+      NC_accr.append(ufloat(float(row['ta']), t_acc_err))
+   if row['class'] == "C":
+      t_acc_err = np.max([row['dta-'], row['dta+']])
+      CC_accr.append(ufloat(float(row['ta']), t_acc_err))
+
+
 # Reservoir means
+
+# Calculate mean and associated error:
+NC_mean = np.mean(NC_accr)
+CC_mean = np.mean(CC_accr)
+print(NC_accr, CC_accr)
+print("NC_mean:", NC_mean)
+print("CC_mean:", CC_mean)
+
+# NC
+ax2.fill_betweenx([-40, -11], [1.03, 1.03], [1.13, 1.13], fc=qred_light, alpha=0.05)
+ax2.axvline(1.08, -50, 0.33, color=qred_light, ls=":", alpha=0.5)
+
+# # CC
+ax2.fill_betweenx([28, 60], [2.24, 2.24], [2.44, 2.44], fc=qblue_light, alpha=0.05)
+ax2.axvline(2.34, 0.665, 1, color=qblue_light, ls=":", alpha=0.5)
+
 # C
 ax2.fill_between([0.0, 4.5], [24, 24], 28, fc=qblue_light, alpha=0.05)
 ax2.axhline(+26, color=qblue_light, ls=":", alpha=0.5)
@@ -134,28 +161,34 @@ y_delta  = 1
 lw       = 25
 
 # CAI formation
-ax1.plot([0.0,0.2], [y_base,y_base], color=qgray_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
+ax1.plot([0.0,0.2], [y_base,y_base], color=qturq_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
 ax1.text(0.23, y_base, 'CAIs', color="k", rotation=0, ha="left", va="center", fontsize=fsize-4)
 y_base+=y_delta
+
 ax1.plot([0.0,0.3], [y_base,y_base], color=qred_dark, ls="-", lw=lw, zorder=12, solid_capstyle='butt', alpha=0.99)
 ax1.plot([0.3,1.8], [y_base,y_base], color=qred, ls="-", lw=lw, zorder=11, solid_capstyle='butt', alpha=0.99)
 ax1.plot([0.0,2.2], [y_base,y_base], color=qred_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
 ax1.text(2.25, y_base, 'NC planetesimals', color="k", rotation=0, ha="left", va="center", fontsize=fsize-4, zorder=20)
 y_base+=y_delta
+
 ax1.plot([0.8,2.7], [y_base,y_base], color=qred, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
 ax1.text(2.75, y_base, '50% Mars', color="k", rotation=0, ha="left", va="center", fontsize=fsize-4, zorder=20)
 y_base+=y_delta
+
+ax1.plot([0.0,4.0], [y_base,y_base], color=qgray_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
+ax1.text(2.0, y_base, 'Chondrules', color="k", rotation=0, ha="center", va="center", fontsize=fsize-4, zorder=20)
+y_base+=y_delta
+
 ax1.plot([1.2,1.6], [y_base,y_base], color=qblue_dark, ls="-", lw=lw, zorder=12, solid_capstyle='butt', alpha=0.99)
 ax1.plot([1.6,2.4], [y_base,y_base], color=qblue, ls="-", lw=lw, zorder=11, solid_capstyle='butt', alpha=0.99)
 ax1.plot([1.2,4.0], [y_base,y_base], color=qblue_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
 ax1.text(3.2, y_base, 'C planetesimals', color="k", rotation=0, ha="center", va="center", fontsize=fsize-4, zorder=20)
 y_base+=y_delta
-ax1.plot([0.0,4.0], [y_base,y_base], color=qmagenta_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
-ax1.text(2.0, y_base, 'Chondrules', color="k", rotation=0, ha="center", va="center", fontsize=fsize-4, zorder=20)
-y_base+=y_delta
+
 ax1.plot([1.7,4.9], [y_base,y_base], color=qblue_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
 ax1.text(1.65, y_base, 'Comets', color="k", rotation=0, ha="right", va="center", fontsize=fsize-4, zorder=20)
 y_base+=y_delta
+
 ax1.plot([4.0,5.0], [y_base,y_base], color=qblue_light, ls="-", lw=lw, zorder=10, solid_capstyle='butt', alpha=0.99)
 ax1.text(3.95, y_base, 'CB impact', color="k", rotation=0, ha="right", va="center", fontsize=fsize-4, zorder=20)
 y_base+=y_delta
